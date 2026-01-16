@@ -1,0 +1,78 @@
+@import "leaflet/dist/leaflet.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 90%;
+    --foreground: 0 0% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 226 18% 24%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 226 18% 24%;
+
+    --primary: 43 89% 38%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 226 18% 24%;
+
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 226 18% 24%;
+
+    --destructive: 0 100% 27%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 43 89% 38%;
+    --input: 220 13% 91%;
+    --ring: 43 89% 38%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 226 18% 24%;
+    --foreground: 47 100% 93%;
+
+    --card: 226 18% 20%;
+    --card-foreground: 47 100% 93%;
+
+    --popover: 226 18% 24%;
+    --popover-foreground: 47 100% 93%;
+
+    --primary: 45 100% 53%;
+    --primary-foreground: 226 18% 24%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 216 34% 17%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
