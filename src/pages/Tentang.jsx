@@ -20,12 +20,12 @@ const Tentang = () => {
                 ]);
                 setPejabat(pejabatRes.data.data || pejabatRes.data);
 
-                // Convert profil array to object by key
+                // Convert profil array to object by key (case-insensitive)
                 const profilData = profilRes.data.data || profilRes.data;
                 const profilMap = {};
                 if (Array.isArray(profilData)) {
                     profilData.forEach(item => {
-                        profilMap[item.key] = item.value;
+                        profilMap[item.key.toLowerCase()] = item.value;
                     });
                 }
                 setProfil(profilMap);
