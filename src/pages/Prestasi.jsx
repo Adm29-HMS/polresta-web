@@ -87,9 +87,10 @@ const Prestasi = () => {
                                     <h3 className="text-xl font-bold text-polres-dark dark:text-white mb-3 line-clamp-2 leading-tight">
                                         {item.judul}
                                     </h3>
-                                    <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 leading-relaxed">
-                                        {item.deskripsi}
-                                    </p>
+                                    <div 
+                                        className="prose prose-sm max-w-none text-gray-600 dark:text-gray-400 line-clamp-3 leading-relaxed"
+                                        dangerouslySetInnerHTML={{ __html: item.deskripsi }}
+                                    />
                                 </CardContent>
                             </Card>
                         </motion.div>

@@ -74,7 +74,10 @@ const Program = () => {
 
                             <div className="p-6 flex-1 flex flex-col">
                                 <h3 className="text-xl font-bold mb-3 text-polres-dark dark:text-white line-clamp-2">{prog.judul}</h3>
-                                <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3 text-sm">{prog.deskripsi}</p>
+                                <div 
+                                    className="prose prose-sm max-w-none text-gray-600 dark:text-gray-400 mb-6 line-clamp-3"
+                                    dangerouslySetInnerHTML={{ __html: prog.deskripsi }}
+                                />
 
                                 <div className="space-y-3 mt-auto text-sm text-gray-500 dark:text-gray-400">
                                     {prog.jadwal_hari && (

@@ -254,7 +254,7 @@ const Home = () => {
                                                 {item.judul}
                                             </h3>
                                             <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-3 mb-4 flex-1">
-                                                {item.ringkasan || item.konten?.substring(0, 150) + '...'}
+                                                {item.ringkasan || (item.konten ? item.konten.replace(/<[^>]+>/g, '').substring(0, 150) + '...' : '')}
                                             </p>
                                             <span className="text-polres-gold text-sm font-bold flex items-center gap-1 mt-auto">
                                                 Baca Selengkapnya <ArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform" />

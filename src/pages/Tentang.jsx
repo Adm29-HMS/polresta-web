@@ -20,14 +20,20 @@ const Tentang = () => {
                 ]);
                 setPejabat(pejabatRes.data.data || pejabatRes.data);
 
-                // Convert profil array to object by key (case-insensitive)
+                // Convert profil array to object by key (with flexible key mapping)
                 const profilData = profilRes.data.data || profilRes.data;
                 const profilMap = {};
                 if (Array.isArray(profilData)) {
                     profilData.forEach(item => {
+                        // Normalize key: lowercase and remove spaces/special chars for flexible matching
+                        const normalizedKey = item.key.toLowerCase().replace(/[^a-z]/g, '');
+                        profilMap[normalizedKey] = item.value;
+
+                        // Also store with original lowercase key for backward compatibility
                         profilMap[item.key.toLowerCase()] = item.value;
                     });
                 }
+                console.log('Profil data loaded:', profilMap);
                 setProfil(profilMap);
             } catch (err) {
                 console.error('Error fetching data:', err);
@@ -72,15 +78,17 @@ const Tentang = () => {
                                 alt="Polresta Sorong Kota"
                                 className="w-full md:w-1/3 rounded-lg object-cover h-64 shadow-sm"
                             />
-                            <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
-                                <p>
-                                    Kepolisian Resor Kota (Polresta) Sorong Kota merupakan satuan pelaksana tugas kepolisian pada tingkat Kota yang berada di bawah naungan Kepolisian Daerah (Polda) Papua Barat.
-                                    Polresta Sorong Kota bertugas menyelenggarakan tugas pokok kepolisian dalam memelihara keamanan dan ketertiban masyarakat, menegakkan hukum, serta memberikan perlindungan, pengayoman, dan pelayanan kepada masyarakat.
-                                </p>
-                                <p>
-                                    Wilayah hukum Polresta Sorong Kota mencakup seluruh Distrik yang ada di Kota Sorong, sebagai pintu gerbang utama di Tanah Papua. Kami berkomitmen untuk menciptakan situasi kamtibmas yang kondusif guna mendukung pembangunan nasional dan daerah.
-                                </p>
-                            </div>
+                            <div className="prose max-w-none text-gray-700 dark:text-gray-300 leading-relaxed" dangerouslySetInnerHTML={{
+                                __html: profil.profil || `<div class="space-y-4">
+                                    <p>
+                                        Kepolisian Resor Kota (Polresta) Sorong Kota merupakan satuan pelaksana tugas kepolisian pada tingkat Kota yang berada di bawah naungan Kepolisian Daerah (Polda) Papua Barat.
+                                        Polresta Sorong Kota bertugas menyelenggarakan tugas pokok kepolisian dalam memelihara keamanan dan ketertiban masyarakat, menegakkan hukum, serta memberikan perlindungan, pengayoman, dan pelayanan kepada masyarakat.
+                                    </p>
+                                    <p>
+                                        Wilayah hukum Polresta Sorong Kota mencakup seluruh Distrik yang ada di Kota Sorong, sebagai pintu gerbang utama di Tanah Papua. Kami berkomitmen untuk menciptakan situasi kamtibmas yang kondusif guna mendukung pembangunan nasional dan daerah.
+                                    </p>
+                                </div>`
+                            }} />
                         </div>
                     </TabsContent>
 
@@ -158,30 +166,37 @@ const Tentang = () => {
 
                     <TabsContent value="visimisi" className="bg-white dark:bg-card p-6 rounded-lg shadow-md border-t-4 border-polres-gold">
                         <h2 className="text-2xl font-bold mb-6 text-polres-dark dark:text-white">Visi & Misi</h2>
-                        <div className="space-y-8">
-                            <div className="bg-polres-cream/30 dark:bg-zinc-800 p-6 rounded-xl border border-polres-gold/20">
-                                <h3 className="text-xl font-bold text-polres-gold mb-3 flex items-center gap-2">
-                                    <span className="w-8 h-8 rounded-full bg-polres-gold text-white flex items-center justify-center">V</span>
-                                    Visi
-                                </h3>
-                                <p className="text-lg font-medium text-gray-800 dark:text-gray-200 italic">
-                                    {profil.visi || '"Terwujudnya Polresta Sorong Kota di wilayah Kota Sorong yang aman, tertib, dan terkendali serta menjadi Kota Sorong yang makmur, adil dan sejahtera."'}
-                                </p>
-                            </div>
+                        {/* Check if data is combined (visimisi) or separate (visi + misi) */}
+                        {profil.visimisi ? (
+                            <div className="prose max-w-none text-gray-700 dark:text-gray-300" dangerouslySetInnerHTML={{
+                                __html: profil.visimisi
+                            }} />
+                        ) : (
+                            <div className="space-y-8">
+                                <div className="bg-polres-cream/30 dark:bg-zinc-800 p-6 rounded-xl border border-polres-gold/20">
+                                    <h3 className="text-xl font-bold text-polres-gold mb-3 flex items-center gap-2">
+                                        <span className="w-8 h-8 rounded-full bg-polres-gold text-white flex items-center justify-center">V</span>
+                                        Visi
+                                    </h3>
+                                    <div className="prose max-w-none text-lg font-medium text-gray-800 dark:text-gray-200 italic" dangerouslySetInnerHTML={{
+                                        __html: profil.visi || '"Terwujudnya Polresta Sorong Kota di wilayah Kota Sorong yang aman, tertib, dan terkendali serta menjadi Kota Sorong yang makmur, adil dan sejahtera."'
+                                    }} />
+                                </div>
 
-                            <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-gray-100 dark:border-white/10">
-                                <h3 className="text-xl font-bold text-polres-dark dark:text-white mb-4 flex items-center gap-2">
-                                    <span className="w-8 h-8 rounded-full bg-polres-dark dark:bg-zinc-700 text-white flex items-center justify-center">M</span>
-                                    Misi
-                                </h3>
-                                <div className="prose max-w-none text-gray-700 dark:text-gray-300" dangerouslySetInnerHTML={{
-                                    __html: profil.misi || `<ul class="space-y-3">
-                                        <li>Mewujudkan Polresta Sorong Kota yang profesional, modern, dan dipercaya oleh masyarakat di wilayah Kota Sorong.</li>
-                                        <li>Melindungi, mengayomi dan melayani masyarakat dengan hati serta menjunjung tinggi negara persatuan dan kesatuan berdasarkan Pancasila dan UUD 1945</li>
-                                    </ul>`
-                                }} />
+                                <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-gray-100 dark:border-white/10">
+                                    <h3 className="text-xl font-bold text-polres-dark dark:text-white mb-4 flex items-center gap-2">
+                                        <span className="w-8 h-8 rounded-full bg-polres-dark dark:bg-zinc-700 text-white flex items-center justify-center">M</span>
+                                        Misi
+                                    </h3>
+                                    <div className="prose max-w-none text-gray-700 dark:text-gray-300" dangerouslySetInnerHTML={{
+                                        __html: profil.misi || `<ul class="space-y-3">
+                                            <li>Mewujudkan Polresta Sorong Kota yang profesional, modern, dan dipercaya oleh masyarakat di wilayah Kota Sorong.</li>
+                                            <li>Melindungi, mengayomi dan melayani masyarakat dengan hati serta menjunjung tinggi negara persatuan dan kesatuan berdasarkan Pancasila dan UUD 1945</li>
+                                        </ul>`
+                                    }} />
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </TabsContent>
 
                     <TabsContent value="sejarah" className="bg-white dark:bg-card p-6 rounded-lg shadow-md border-t-4 border-polres-gold">

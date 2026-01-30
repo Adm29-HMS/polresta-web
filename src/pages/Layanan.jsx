@@ -119,9 +119,10 @@ const Layanan = () => {
                                         <CardTitle className="text-xl">{service.nama}</CardTitle>
                                     </CardHeader>
                                     <CardContent className="flex-grow">
-                                        <CardDescription className="text-base text-gray-600 dark:text-gray-400">
-                                            {service.deskripsi}
-                                        </CardDescription>
+                                        <div 
+                                            className="prose prose-sm max-w-none text-gray-600 dark:text-gray-400"
+                                            dangerouslySetInnerHTML={{ __html: service.deskripsi }}
+                                        />
                                     </CardContent>
                                     <CardFooter>
                                         <Link to={`/layanan/${service.slug}`} className="w-full">

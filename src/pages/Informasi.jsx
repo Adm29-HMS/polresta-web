@@ -79,12 +79,13 @@ const Informasi = () => {
                                 }`}>
                                 {peringatan.judul}
                             </h2>
-                            <p className={`mb-4 ${peringatan.level === 'bahaya' ? 'text-red-900 dark:text-red-200'
-                                    : peringatan.level === 'waspada' ? 'text-yellow-900 dark:text-yellow-200'
-                                        : 'text-blue-900 dark:text-blue-200'
-                                }`}>
-                                {peringatan.deskripsi}
-                            </p>
+                            <div 
+                                className={`prose prose-sm max-w-none mb-4 ${peringatan.level === 'bahaya' ? 'text-red-900 dark:text-red-200'
+                                        : peringatan.level === 'waspada' ? 'text-yellow-900 dark:text-yellow-200'
+                                            : 'text-blue-900 dark:text-blue-200'
+                                    }`}
+                                dangerouslySetInnerHTML={{ __html: peringatan.deskripsi }}
+                            />
                             {peringatan.lokasi && (
                                 <span className={`text-xs font-bold px-2 py-1 rounded ${peringatan.level === 'bahaya'
                                         ? 'text-red-500 dark:text-red-300 bg-red-100 dark:bg-red-900/40'
@@ -148,7 +149,12 @@ const Informasi = () => {
                                         <h3 className="font-bold text-lg mb-1 text-red-700 dark:text-red-400">{item.nama}</h3>
                                         {item.alias && <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">alias: {item.alias}</p>}
                                         <p className="text-xs font-bold bg-gray-100 dark:bg-zinc-800 dark:text-gray-300 inline-block px-2 py-1 rounded mb-2">{item.kasus}</p>
-                                        {item.ciri_fisik && <p className="text-xs text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">{item.ciri_fisik}</p>}
+                                        {item.ciri_fisik && (
+                                            <div 
+                                                className="prose prose-sm max-w-none text-xs text-gray-500 dark:text-gray-400 mb-4 line-clamp-2"
+                                                dangerouslySetInnerHTML={{ __html: item.ciri_fisik }}
+                                            />
+                                        )}
                                         <Button size="sm" className="w-full bg-red-600 hover:bg-red-700 text-white">Lapor Polisi</Button>
                                     </CardContent>
                                 </Card>
@@ -186,7 +192,12 @@ const Informasi = () => {
                                         <h3 className="font-bold text-lg mb-1 text-polres-dark dark:text-white">{item.nama}</h3>
                                         <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">{item.jenis_kelamin}, {item.usia} tahun</p>
                                         <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Terakhir terlihat: {item.lokasi_terakhir}</p>
-                                        {item.ciri && <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 line-clamp-2">Ciri: {item.ciri}</p>}
+                                        {item.ciri && (
+                                            <div 
+                                                className="prose prose-sm max-w-none text-xs text-gray-500 dark:text-gray-400 mb-2 line-clamp-2"
+                                                dangerouslySetInnerHTML={{ __html: `Ciri: ${item.ciri}` }}
+                                            />
+                                        )}
                                         <p className="text-xs font-bold text-polres-gold">Hubungi: {item.kontak}</p>
                                     </CardContent>
                                 </Card>
